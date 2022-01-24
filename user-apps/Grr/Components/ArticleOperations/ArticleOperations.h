@@ -37,6 +37,7 @@
     NSToolbarItem* browseItem;
     
     NSMenuItem* browseMenuItem;
+    NSMenuItem* unreadMenuItem;
 }
 
 -(void)browseSelectedArticles;

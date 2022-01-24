@@ -59,6 +59,15 @@
         // Add the menu
         [menu addItem: browseMenuItem];
 
+	// Mark article unread menu item FIXME: memory leak? And above too?
+        unreadMenuItem = [[NSMenuItem alloc] initWithTitle: _(@"Unread")
+                                                    action: @selector(unreadSelectedArticles)
+                                             keyEquivalent: @"u"];
+        [unreadMenuItem setTarget: self];
+        
+        // Add the menu
+        [menu addItem: unreadMenuItem];
+
         
         // Provided identifiers
         identifiers = [NSArray arrayWithObjects:
@@ -132,6 +141,16 @@ willBeInsertedIntoToolbar: (BOOL)flag
     
     while ((article = [enumerator nextObject]) != nil) {
         [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:[article url]]];
+    }
+}
+
+-(void)unreadSelectedArticles
+{
+    NSEnumerator* enumerator = [selectedArticles objectEnumerator];
+    id<Article> article;
+    
+    while ((article = [enumerator nextObject]) != nil) {
+      [article setRead: NO];
     }
 }
 
